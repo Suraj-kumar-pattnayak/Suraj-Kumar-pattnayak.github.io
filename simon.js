@@ -2,8 +2,14 @@ const maxscore = document.getElementsByClassName("maxscores")[0];
 
 let x = localStorage.getItem("data");
 
-maxscore.innerHTML=x;
 
+if(x){
+    maxscore.innerHTML=x;
+}
+else{
+    maxscore.innerHTML='0';
+}
+console.log(x);
 
 document.addEventListener('DOMContentLoaded', function () {
     const colors = ['green', 'red', 'yellow', 'blue'];
@@ -140,6 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function show(){
     console.log(maxscore.innerHTML);
+    // localStorage.setItem("data", 0);
+
 }
 
 show();
