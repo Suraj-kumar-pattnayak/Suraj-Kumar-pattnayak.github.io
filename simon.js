@@ -7,17 +7,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const buttons = document.querySelectorAll('.simon-button');
     const startButton = document.getElementById('start-btn');
+    const restartButton = document.getElementById('restart-btn');
+    const scoreMessage = document.getElementById('score-message');
 
     startButton.addEventListener('click', startGame);
+    restartButton.addEventListener('click', restartGame);
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
-            if (gameStarted) {
-                const clickedColor = button.id;
-                lightUpButton(clickedColor);
-                userSequence.push(clickedColor);
-                checkUserSequence();
+            if (!gameStarted) {
+                return; // Ignore button clicks if the game hasn't started
             }
+            const clickedColor = button.id;
+            lightUpButton(clickedColor);
+            userSequence.push(clickedColor);
+            checkUserSequence();
         });
     });
 
@@ -35,6 +39,14 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLevelDisplay();
         generateSimonSequence(level);
         playSimonSequence();
+        // if(restartGame()) { startButton.innerText = "Start Game";};
+    }
+    function nxt()
+    {  
+        updateLevelDisplay();
+        generateSimonSequence(level);
+        playSimonSequence();
+        startButton.innerText = "Start Game";
     }
 
     function updateLevelDisplay() {
@@ -78,16 +90,34 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (userSequence.length === simonSequence.length) {
             level++;
             userSequence.length = 0;
-            setTimeout(nextTurn, 1000);
+            scoreMessage.style.color = "green";
+            scoreMessage.style.fontSize = "x-large";
+            scoreMessage.textContent = `Success! Your score: ${level - 1}`;
+            setTimeout(() => {
+                scoreMessage.textContent = ''; // Clear score message after a delay
+                nextTurn();
+            }, 2000);
         }
     }
 
     function endGame() {
-        alert(`Game Over! Your score: ${level - 1}`);
+        scoreMessage.style.color = "red";
+        scoreMessage.style.fontSize = "x-large";
+        scoreMessage.textContent = `Game Over! Your final score: ${level - 1}`;
         level = 1;
         gameStarted = false;
         updateLevelDisplay();
     }
+
+    function restartGame() {
+        level = 1;
+        simonSequence.length = 0;
+        userSequence.length = 0;
+        scoreMessage.textContent = ''; // Clear any existing score message
+        nxt();
+    }
 });
+
+
 
 
