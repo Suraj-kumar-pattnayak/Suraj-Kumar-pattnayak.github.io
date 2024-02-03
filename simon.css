@@ -55,6 +55,17 @@ body{
     border: none;
     border-radius: 4px;
 }
+
+
+.text{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    background-color: rgb(90, 80, 80);
+    color: white;
+    padding: 10px;
+}
 #restart-btn {
     margin-top: 20px;
     padding: 10px 20px;

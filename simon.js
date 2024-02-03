@@ -1,10 +1,24 @@
-document.addEventListener('DOMContentLoaded', function() {
+const maxscore = document.getElementsByClassName("maxscores")[0];
+
+let x = localStorage.getItem("data");
+
+maxscore.innerHTML=x;
+
+
+document.addEventListener('DOMContentLoaded', function () {
     const colors = ['green', 'red', 'yellow', 'blue'];
     let simonSequence = [];
     let userSequence = [];
     let level = 1;
     let gameStarted = false;
+    
 
+   
+
+    let x = localStorage.getItem("data");
+    maxscore.innerHTML=x;
+    
+    console.log(x);
     const buttons = document.querySelectorAll('.simon-button');
     const startButton = document.getElementById('start-btn');
     const restartButton = document.getElementById('restart-btn');
@@ -41,8 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         playSimonSequence();
         // if(restartGame()) { startButton.innerText = "Start Game";};
     }
-    function nxt()
-    {  
+    function nxt() {
         updateLevelDisplay();
         generateSimonSequence(level);
         playSimonSequence();
@@ -89,6 +102,13 @@ document.addEventListener('DOMContentLoaded', function() {
             endGame();
         } else if (userSequence.length === simonSequence.length) {
             level++;
+            let num = parseInt(maxscore.innerHTML);
+
+            if (num < level) {
+                maxscore.innerHTML = level;
+                localStorage.setItem("data", level);
+                console.log(data);
+            }
             userSequence.length = 0;
             scoreMessage.style.color = "green";
             scoreMessage.style.fontSize = "x-large";
@@ -118,6 +138,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+function show(){
+    console.log(maxscore.innerHTML);
+}
 
+show();
 
 
